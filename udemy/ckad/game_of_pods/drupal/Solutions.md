@@ -128,6 +128,7 @@ kubectl apply -f drupal-pvc.yaml
 touch  drupal-mysql-pvc.yaml
 
 ```
+```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
