@@ -85,7 +85,7 @@ spec:
 Then create pv:
 
 ```
-kubectlkl apply -f drupal-mysql-data.yaml
+kubectl apply -f drupal-mysql-pv.yaml
 ```
 
 ## drupal-pvc
@@ -226,4 +226,42 @@ kubectl apply -f drupal-deployment.yaml
 
 ```
 touch drupal-mysql-deployment.yaml
+```
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: drupal-mysql
+  name: drupal-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal-mysql
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: drupal-mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        volumeMounts:
+        - mountPath:  /var/lib/mysql
+          subPath: dbdata
+          name: drupal-mysql-data
+      volumes:
+      - name: drupal-mysql-data
+        persistentVolumeClaim:
+          claimName: drupal-mysql-pvc
+```
+
+
+```
+kubectl apply -f  drupal-mysql-deployment.yaml
 ```
