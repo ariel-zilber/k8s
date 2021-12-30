@@ -44,10 +44,10 @@ spec:
 ^C
 ```
 
+
 Then create the pv:
 '''
 kubectl apply -f drupal-pv.yaml
-
 ```
 
 ## drupal-mysql-pv
@@ -73,9 +73,11 @@ spec:
 ```
 
 Then create pv:
+
 ```
 kubectlkl apply -f drupal-mysql-data.yaml
 ```
+
 ## drupal-pvc
 
 ```
@@ -95,8 +97,9 @@ spec:
       storage: 5Gi
   storageClassName: drupal-pv
 ^C
-
 ```
+
+
 Then 
 
 
@@ -104,6 +107,8 @@ Then
 kubectl apply -f drupal-pvc.yaml
 
 ```
+
+
 ## drupal-mysql-pvc
 
 ```
@@ -134,11 +139,14 @@ Then
 kubectl apply -f drupal-mysql-pvc.yaml
 
 ```
+
 ## drupal-deployment
+
 1.
 ```
 touch drupal-deployment.yaml
 ```
+
 2.
 edit the file:
 ```
@@ -191,6 +199,7 @@ spec:
       - name: drupal-data
         persistentVolumeClaim:
           claimName: drupal-pvc
+          
 ```
 
 Then :
