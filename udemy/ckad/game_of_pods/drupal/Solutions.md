@@ -40,7 +40,7 @@ spec:
     - ReadWriteOnce
   storageClassName: drupal-pv
   hostPath:
-      path: "drupal-data"
+      path: "/drupal-data"
 ^C
 ```
 
