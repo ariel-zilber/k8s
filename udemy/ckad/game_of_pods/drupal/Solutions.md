@@ -71,13 +71,13 @@ kind: PersistentVolume
 metadata:
   name: drupal-mysql-pv
   labels:
-    app: drupaly
+    app: drupal
 spec:
   capacity:
     storage: 5Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: drupal-mysql-pv
+  storageClassName: drupal-mysql-data
   hostPath:
     path: "/drupal-mysql-data"
 ```
@@ -142,7 +142,7 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: drupal-mysql-pvc
+  storageClassName: drupal-mysql-data
 ```
 
 
