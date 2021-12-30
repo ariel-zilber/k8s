@@ -207,3 +207,9 @@ Then :
 kubectl apply -f drupal-deployment.yaml
 ```
 
+
+## drupal-mysql-deployment
+
+```
+touch drupal-mysql-deployment.yaml
+```
