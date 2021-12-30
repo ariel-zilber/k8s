@@ -40,7 +40,7 @@ kind: PersistentVolume
 metadata:
   name: drupal-pv
   labels:
-    app: drupaly
+    app: drupal
 spec:
   capacity:
     storage: 5Gi
