@@ -46,7 +46,7 @@ spec:
 
 
 Then create the pv:
-'''
+```
 kubectl apply -f drupal-pv.yaml
 ```
 
