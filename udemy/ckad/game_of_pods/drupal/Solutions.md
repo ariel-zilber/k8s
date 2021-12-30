@@ -26,7 +26,12 @@ kubectl apply -f drupal-mysql-service.yaml
 
 First create yaml 
 ```
-terminal $ cat > drupal-pv.yaml 
+touch  drupal-pv.yaml 
+```
+
+Then edit the yaml
+
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -41,7 +46,6 @@ spec:
   storageClassName: drupal-pv
   hostPath:
       path: "/drupal-data"
-^C
 ```
 
 
@@ -54,7 +58,11 @@ kubectl apply -f drupal-pv.yaml
 
 First create yaml
 ```
-controlplane $ cat > drupal-mysql-pv.yaml 
+touch  drupal-mysql-pv.yaml 
+```
+
+Then edit the yaml
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -69,7 +77,6 @@ spec:
   storageClassName: drupal-mysql-pv
   hostPath:
     path: "/drupal-mysql-data"
-^C
 ```
 
 Then create pv:
@@ -81,7 +88,11 @@ kubectlkl apply -f drupal-mysql-data.yaml
 ## drupal-pvc
 
 ```
-controlplane $ cat > drupal-pvc.yaml
+touch  drupal-pvc.yaml
+```
+
+
+```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -96,7 +107,6 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: drupal-pv
-^C
 ```
 
 
@@ -112,7 +122,9 @@ kubectl apply -f drupal-pvc.yaml
 ## drupal-mysql-pvc
 
 ```
-controlplane $ cat > drupal-mysql-pvc.yaml
+touch  drupal-mysql-pvc.yaml
+
+```
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -127,8 +139,6 @@ spec:
     requests:
       storage: 5Gi
   storageClassName: drupal-mysql-pvc
-^C
-
 ```
 
 
