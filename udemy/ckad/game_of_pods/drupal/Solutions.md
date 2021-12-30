@@ -9,6 +9,8 @@ kubectl create secret generic drupal-mysql-secret --from-literal=MYSQL_ROOT_PASS
 ##  drupal-service
 ```
 kubectl create service nodeport  drupal-service --tcp=80 --node-port=30095 --dry-run=client  -o yaml | kubectl set selector --local -f - 'app=drupal' -o yaml > drupal-service.yaml
+```
+```
 kubectl apply -f drupal-service.yaml
 ```
 
@@ -18,8 +20,9 @@ kubectl apply -f drupal-service.yaml
 
 ```
 kubectl create service clusterip  drupal-mysql-service --tcp=3306:80 --dry-run=client -o yaml | kubectl set selector  --local -f - 'app=drupal' -o yaml > drupal-mysql-service.yaml
+```
+```
 kubectl apply -f drupal-mysql-service.yaml
-
 ```
 
 ## drupal-pv
