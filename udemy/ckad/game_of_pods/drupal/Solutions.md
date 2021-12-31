@@ -19,7 +19,7 @@ kubectl apply -f drupal-service.yaml
 ##  drupal-mysql-service
 
 ```
-kubectl create service clusterip  drupal-mysql-service --tcp=3306:80 --dry-run=client -o yaml | kubectl set selector  --local -f - 'app=drupal' -o yaml > drupal-mysql-service.yaml
+kubectl create service clusterip  drupal-mysql-service --tcp=3306:3306 --dry-run=client -o yaml | kubectl set selector  --local -f - 'app=drupal' -o yaml > drupal-mysql-service.yaml
 ```
 ```
 kubectl apply -f drupal-mysql-service.yaml
@@ -266,11 +266,10 @@ spec:
             secretKeyRef:
               name: drupal-mysql-secret
               key: MYSQL_DATABASE
-        - name: MYSQL_USER
-          valueFrom:
-            secretKeyRef:
-              name: drupal-mysql-secret
-              key: MYSQL_USER
+        ports:
+        - containerPort: 3306
+          name: mysql
+          protocol: TCP              
       volumes:
       - name: drupal-mysql-data
         persistentVolumeClaim:
