@@ -240,7 +240,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: drupal-mysql
+      app: drupal
   strategy: {}
   template:
     metadata:
@@ -255,6 +255,22 @@ spec:
         - mountPath:  /var/lib/mysql
           subPath: dbdata
           name: drupal-mysql-data
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: drupal-mysql-secret
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: drupal-mysql-secret
+              key: MYSQL_DATABASE
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: drupal-mysql-secret
+              key: MYSQL_USER
       volumes:
       - name: drupal-mysql-data
         persistentVolumeClaim:
