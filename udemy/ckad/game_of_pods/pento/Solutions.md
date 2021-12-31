@@ -1,7 +1,21 @@
-# Solution to game of pods:drupal
+# Solution to game of pods:pento
 ![architecture](architecture.PNG)
 
-## drupal-secret
+## gop-fs-service
+
 ```
-kubectl create secret generic drupal-mysql-secret --from-literal=MYSQL_ROOT_PASSWORD=root_password --from-literal=MYSQL_DATABASE=drupal-database --from-literal=MYSQL_USER=root
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bravo
+  name: gop-fs-service
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: bravo
+  type: NodePort
 ```
