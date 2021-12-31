@@ -234,7 +234,7 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: drupal-mysql
+    app: drupal
   name: drupal-mysql
 spec:
   replicas: 1
@@ -246,7 +246,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: drupal-mysql
+        app: drupal
     spec:
       containers:
       - image: mysql:5.7
