@@ -46,14 +46,25 @@ kubectl run nginx --image=nginx --port=80
 ```
 ### Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'
 ### Get pod's YAML
+```
+kubectl get po nginx -o yaml
+```
 ### Get information about the pod, including details about potential issues (e.g. pod hasn't started)
+```
+```
 ### Get pod logs
 ```
 kubectl logs nginx
 ```
 
 ### If pod crashed and restarted, get logs about the previous instance
+```
+kubectl logs nginx --previous
+```
 ### Execute a simple shell on the nginx pod
+```
+
+```
 ### Create a busybox pod that echoes 'hello world' and then exits
 ```
 kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
