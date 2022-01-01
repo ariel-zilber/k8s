@@ -27,16 +27,45 @@ cat envpod.yaml
 kubectl create namespace myns --dry-run=client -o yaml
 ```
 ### Get the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it
-
+```
+controlplane $ kubectl create quota myrq   --hard=cpu=1000m,memory=1G,pod=2 --dry-run=client -o yaml
+```
 ### Get pods on all namespaces
+```
+kubectl get pods --all-namespace
+```
 ### Create a pod with image nginx called nginx and expose traffic on port 80
+```
+kubectl run nginx --image=nginx --port=80
+
+```
+
 ### Change pod's image to nginx:1.7.1. Observe that the container will be restarted as soon as the image gets pulled
+```
+
+```
 ### Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'
 ### Get pod's YAML
 ### Get information about the pod, including details about potential issues (e.g. pod hasn't started)
 ### Get pod logs
+```
+kubectl logs nginx
+```
+
 ### If pod crashed and restarted, get logs about the previous instance
 ### Execute a simple shell on the nginx pod
 ### Create a busybox pod that echoes 'hello world' and then exits
+```
+kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
+
+```
 ### Do the same, but have the pod deleted automatically when it's completed
+```
+kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
+
+```
 ### Create an nginx pod and set an env value as 'var1=val1'. Check the env value existence within the pod
+```
+kubectl run nginx --restart=Never --image=nginx --env=var1=val1 -it --rm -- env
+
+```
