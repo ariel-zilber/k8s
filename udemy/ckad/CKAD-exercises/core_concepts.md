@@ -1,11 +1,33 @@
 # Core Concepts (13%)
 
 ### Create a namespace called 'mynamespace' and a pod with image nginx called nginx on this namespace
+```
+kubectl create namespace mynamespace
+kubectl run nginx --image=nginx --restart=Never -n mynamespace
+```
 ### Create the pod that was just described using YAML
+```
+kubectl run nginx --image=nginx --restart=Never --dry-run=client -o yaml | kubectl create -n mynamespace -f -
+```
 ### Create a busybox pod (using kubectl command) that runs the command "env". Run it and see the output
+```
+kubectl run busybox --image=busybox --command --restart=Never -- env
+kubectl logs busybox
+
+```
+
 ### Create a busybox pod (using YAML) that runs the command "env". Run it and see the output
+```
+kubectl run busybox --image=busybox --restart=Never --dry-run=client -o yaml --command -- env > envpod.yaml
+# see it
+cat envpod.yaml
+```
 ### Get the YAML for a new namespace called 'myns' without creating it
+```
+kubectl create namespace myns --dry-run=client -o yaml
+```
 ### Get the YAML for a new ResourceQuota called 'myrq' with hard limits of 1 CPU, 1G memory and 2 pods without creating it
+
 ### Get pods on all namespaces
 ### Create a pod with image nginx called nginx and expose traffic on port 80
 ### Change pod's image to nginx:1.7.1. Observe that the container will be restarted as soon as the image gets pulled
