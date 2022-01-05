@@ -1,20 +1,35 @@
 ### Create 3 pods with names nginx1,nginx2,nginx3. All of them should have the label app=v1
 ```
+kubectl run nginx1 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx2 --image=nginx --restart=Never --labels=app=v1
+kubectl run nginx3 --image=nginx --restart=Never --labels=app=v1
+
 ```
 ### Show all labels of the pods
 ```
+kubectl get po --show-labels
+
 ```
 ### Change the labels of pod 'nginx2' to be app=v2
 ```
+kubectl label pod nginx2 app=v2 --overwrite
 ```
 ### Get the label 'app' for the pods (show a column with APP labels)
 ```
+ kubectl get pod -l app
 ```
 ### Get only the 'app=v2' pods
 ```
+kubectl get po -l app=v2
+
 ```
 ### Remove the 'app' label from the pods we created before
 ```
+kubectl label po nginx1 nginx2 nginx3 app-
+# or
+kubectl label po nginx{1..3} app-
+# or
+kubectl label po -l app app-
 ```
 ### Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'
 ```
