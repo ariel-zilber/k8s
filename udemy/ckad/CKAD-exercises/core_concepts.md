@@ -42,7 +42,10 @@ kubectl run nginx --image=nginx --port=80
 
 ### Change pod's image to nginx:1.7.1. Observe that the container will be restarted as soon as the image gets pulled
 ```
-
+# kubectl set image POD/POD_NAME CONTAINER_NAME=IMAGE_NAME:TAG
+kubectl set image pod/nginx nginx=nginx:1.7.1
+kubectl describe po nginx # you will see an event 'Container will be killed and recreated'
+kubectl get po nginx -w # watch it
 ```
 ### Get nginx pod's ip created in previous step, use a temp busybox image to wget its '/'
 ### Get pod's YAML
@@ -51,6 +54,7 @@ kubectl get po nginx -o yaml
 ```
 ### Get information about the pod, including details about potential issues (e.g. pod hasn't started)
 ```
+kubectl describe po nginx
 ```
 ### Get pod logs
 ```
@@ -63,8 +67,9 @@ kubectl logs nginx --previous
 ```
 ### Execute a simple shell on the nginx pod
 ```
-
+kubectl exec -it nginx -- /bin/sh
 ```
+
 ### Create a busybox pod that echoes 'hello world' and then exits
 ```
 kubectl run busybox --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo hello world'
