@@ -33,30 +33,70 @@ kubectl label po -l app app-
 ```
 ### Create a pod that will be deployed to a Node that has the label 'accelerator=nvidia-tesla-p100'
 ```
+kubectl label nodes <your-node-name> accelerator=nvidia-tesla-p100
+kubectl get nodes --show-labels
+```
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cuda-test
+spec:
+  containers:
+    - name: cuda-test
+      image: "k8s.gcr.io/cuda-vector-add:v0.1"
+  nodeSelector: # add this
+    accelerator: nvidia-tesla-p100 # the selection label
 ```
 ### Annotate pods nginx1, nginx2, nginx3 with "description='my description'" value
 ```
+kubectl annotate po nginx1 nginx2 nginx3 description='my description'
+
+#or
+
+kubectl annotate po nginx{1..3} description='my description'
 ```
 ### Check the annotations for pod nginx1
 ```
+kubectl annotate pod nginx1 --list
+  
+# or
+
+kubectl describe po nginx1 | grep -i 'annotations'
+
+# or
+
+kubectl get po nginx1 -o custom-columns=Name:metadata.name,ANNOTATIONS:metadata.annotations.description
 ```
 ### Remove the annotations for these three pods
 ```
+kubectl annotate po nginx{1..3} description-
+
 ```
 ### Remove these pods to have a clean state in your cluster
 ```
+kubectl delete po nginx{1..3}
+
 ```
 ### Create a deployment with image nginx:1.18.0, called nginx, having 2 replicas, defining port 80 as the port that this container exposes (don't create a service for this deployment)
 ```
+kubectl create deploy nginx --image=nginx:1.18.0 --replicas=2 --port=80
+
 ```
 ### View the YAML of this deployment
 ```
+kubectl get deploy nginx -o yaml
+
 ```
 ### View the YAML of the replica set that was created by this deployment
 ```
+kubectl get rs nginx-7bf7478b77 -o yaml
+
 ```
 ### Get the YAML for one of the pods
 ```
+kubectl get po -l run=nginx # if you created deployment by 'run' command
+
 ```
 ### Check how the deployment rollout is going
 ```
