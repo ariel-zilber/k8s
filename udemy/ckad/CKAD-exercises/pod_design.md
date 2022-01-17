@@ -100,45 +100,92 @@ kubectl get po -l run=nginx # if you created deployment by 'run' command
 ```
 ### Check how the deployment rollout is going
 ```
+kubectl rollout status deploy nginx
+
 ```
 ### Update the nginx image to nginx:1.19.8
 ```
+kubectl set image deploy nginx nginx=nginx:1.19.8
+# alternatively...
+kubectl edit deploy nginx # change the .spec.template.spec.containers[0].image
 ```
 ### Check the rollout history and confirm that the replicas are OK
 ```
+kubectl rollout history deploy nginx
+kubectl get deploy nginx
+kubectl get rs # check that a new replica set has been created
+kubectl get po
 ```
 ### Undo the latest rollout and verify that new pods have the old image (nginx:1.18.0)
 ```
+kubectl rollout undo deploy nginx
+# wait a bit
+kubectl get po # select one 'Running' Pod
+kubectl describe po nginx-5ff4457d65-nslcl | grep -i image # should be nginx:1.18.0
 ```
 ### Do an on purpose update of the deployment with a wrong image nginx:1.91
 ```
+kubectl set image deploy nginx nginx=nginx:1.91
+# or
+kubectl edit deploy nginx
+# change the image to nginx:1.91
+# vim tip: type (without quotes) '/image' and Enter, to navigate quickly
 ```
 ### Verify that something's wrong with the rollout
 ```
+kubectl rollout status deploy nginx
+# or
+kubectl get po # you'll see 'ErrImagePull' or 'ImagePullBackOff'
 ```
 ### Return the deployment to the second revision (number 2) and verify the image is nginx:1.19.8
 ```
+kubectl rollout undo deploy nginx --to-revision=2
+kubectl describe deploy nginx | grep Image:
+kubectl rollout status deploy nginx # Everything should be OK
 ```
 ### Check the details of the fourth revision (number 4)
 ```
+kubectl rollout history deploy nginx --revision=4 # You'll also see the wrong image displayed here
+
 ```
 ### Scale the deployment to 5 replicas
 ```
+kubectl scale deploy nginx --replicas=5
+kubectl get po
+kubectl describe deploy nginx
 ```
 ### Autoscale the deployment, pods between 5 and 10, targetting CPU utilization at 80%
 ```
+kubectl autoscale deploy nginx --min=5 --max=10 --cpu-percent=80
+# view the horizontalpodautoscalers.autoscaling for nginx
+kubectl get hpa nginx
 ```
 ### Pause the rollout of the deployment
 ```
+kubectl rollout pause deploy nginx
+
 ```
 ### Update the image to nginx:1.19.9 and check that there's nothing going on, since we paused the rollout
 ```
+kubectl set image deploy nginx nginx=nginx:1.19.9
+# or
+kubectl edit deploy nginx
+# change the image to nginx:1.19.9
+kubectl rollout history deploy nginx # no new revision
 ```
 ### Resume the rollout and check that the nginx:1.19.9 image has been applied
 ```
+kubectl rollout resume deploy nginx
+kubectl rollout history deploy nginx
+kubectl rollout history deploy nginx --revision=6 # insert the number of your latest revision
 ```
 ### Delete the deployment and the horizontal pod autoscaler you created
 ```
+kubectl delete deploy nginx
+kubectl delete hpa nginx
+
+#Or
+kubectl delete deploy/nginx hpa/nginx
 ```
 ### Create a job named pi with image perl that runs the command with arguments "perl -Mbignum=bpi -wle 'print bpi(2000)'"
 ```
